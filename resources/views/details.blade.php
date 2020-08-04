@@ -27,9 +27,12 @@
                                       <td>{{$detail->montantDetail}}</td>
                                       <td>
                                         <div class="btn-group">
-                                          <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                                           <a class="btn btn-success" href="#myModal{{$detail->id}}" data-toggle="modal"><i class="icon_check_alt2"></i></a>
-                                          <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                                          <form style="display:inline;" action="{{route('details.delete', $detail->id)}}" method="post">
+                                            {{ method_field('DELETE') }}
+                                                              @csrf
+                                            <button class="btn btn-danger" type="submit"><i class="icon_close_alt2"></i></button>
+                                          </form>
                                         </div>
                                       </td>
                                     </tr>   

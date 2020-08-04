@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Encaissement;
-use App\Client;
+use App\TypeDepense;
 use Illuminate\Http\Request;
 
-class EncaissementController extends Controller
+class TypeDepenseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,8 @@ class EncaissementController extends Controller
      */
     public function index()
     {
-        //
-        $clients = Client::all();
-        $encaissements = Encaissement::all();
-        return view('encaisse', ['clients' => $clients, 'encaissements' => $encaissements]);
+        $types = TypeDepense::all();
+        return view('typedepenses', ['types' => $types]);
     }
 
     /**
@@ -39,26 +36,23 @@ class EncaissementController extends Controller
      */
     public function store(Request $request)
     {
-        //
         //dd($request->all());
-        $encaissement = new Encaissement;
+        $type = new TypeDepense;
 
-        $encaissement->dateEncaissement = $request->dateEncaissement;
-        $encaissement->montantEncaisse = $request->montant;
-        $encaissement->cient_id = $request->client;
+        $type->libelleType = $request->libelleType;
 
-        $encaissement->save();
+        $type->save();
 
-        return redirect()->route('encaissements');
+        return redirect()->route('types');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Encaissement  $encaissement
+     * @param  \App\TypeDepense  $typeDepense
      * @return \Illuminate\Http\Response
      */
-    public function show(Encaissement $encaissement)
+    public function show(TypeDepense $typeDepense)
     {
         //
     }
@@ -66,10 +60,10 @@ class EncaissementController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Encaissement  $encaissement
+     * @param  \App\TypeDepense  $typeDepense
      * @return \Illuminate\Http\Response
      */
-    public function edit(Encaissement $encaissement)
+    public function edit(TypeDepense $typeDepense)
     {
         //
     }
@@ -78,24 +72,28 @@ class EncaissementController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Encaissement  $encaissement
+     * @param  \App\TypeDepense  $typeDepense
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Encaissement $encaissement)
+    public function update(Request $request, TypeDepense $typeDepense)
     {
-        //
+        //dd($request);
+        TypeDepense::where('id', $request->id)->update([
+            'libelleType' => $request['libelleType'],
+        ]);
+        return redirect()->route('types');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Encaissement  $encaissement
+     * @param  \App\TypeDepense  $typeDepense
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Encaissement $encaissement)
+    public function destroy(Request $request,TypeDepense $typeDepense)
     {
-        $encaissement = Encaissement::findOrfail($request->id);
-        $encaissement->delete();
-        return redirect()->route('encaissements');
+        $type = TypeDepense::findOrfail($request->id);
+        $type->delete();
+        return redirect()->route('types');
     }
 }

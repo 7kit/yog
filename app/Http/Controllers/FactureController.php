@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DetailFacture;
 use App\Facture;
 use App\Client;
 use Illuminate\Http\Request;
@@ -46,6 +47,7 @@ class FactureController extends Controller
         //$facture->montantFacture = $request->montant;
         $facture->cient_id = $request->client;
         $facture->nFacture = $request->nFacture;
+        $facture->remise = $request->remise;
 
         $facture->save();
 
@@ -84,10 +86,13 @@ class FactureController extends Controller
      */
     public function update(Request $request, Facture $facture)
     {
-         Produit::where('id', $request->id)->update([
+        $montant = DetailFacture::where('facture_id', $request->facture_id)->sum('montantDetail');
+        //dd($request);
+         Facture::where('nFacture', $request['nFacture'])->update([
                  'dateFacture' => $request['dateFacture'],
                  'cient_id' => $request['client'],
-                 'montantFacture' => $request['montantFacture'],
+                 'remise' => $request['remise'],
+                 'montantFacture' => $montant*(100-$request['remise'])/100,
                  'nFacture' => $request['nFacture'],
              ]);
          return redirect()->route('factures');// cela devrait renvoyer vers la facture individuelle pour saisir les détails.
@@ -99,8 +104,11 @@ class FactureController extends Controller
      * @param  \App\Facture  $facture
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Facture $facture)
+    public function destroy(Request $request, Facture $facture)
     {
+        $facture = Facture::findOrfail($request->id);
+        $facture->delete();
+        return redirect()->route('factures');
         //
     }
 }

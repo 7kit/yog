@@ -19,8 +19,8 @@
                 Mouvements
               </header>
               <ul class="list-group">
-                <li class="list-group-item">Total Montant Encaissé : {{$montantEncaisse}}</li>
-                <li class="list-group-item">Total Montant Facturé : {{$montantFacture}}</li>
+                <li class="list-group-item">Total Montant Encaissé : {{$montantEncaisse}}  || Ce mois-ci : </li>
+                <li class="list-group-item">Total Montant Facturé : {{$montantFacture}} || Ce mois-ci : {{$montantThisMonth}} || Aujourd'hui : {{$montantToday}}</li>
                 <li class="list-group-item">Total fonds a percevoir : {{$resteAPayer}} des clients suivants : <br> @foreach($clients as $client)
                 	@if($client->montant()!=0)
                 	<p>{{$client->libelleClient}} : {{$client->montant()}}</p>

@@ -80,7 +80,7 @@ class ProduitController extends Controller
     {
         //dd($request->all());
         //dd($produit->id);
-        
+
          Produit::where('id', $request->id)->update([
                  'designation' => $request['designationProduit'],
                  'prixUnitaire' => $request['prix'],
@@ -101,8 +101,10 @@ class ProduitController extends Controller
      * @param  \App\Produit  $produit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produit $produit)
+    public function destroy(Request $request, Produit $produit)
     {
-        //
+        $produit = Produit::findOrfail($request->id);
+        $produit->delete();
+        return redirect()->route('produits');
     }
 }

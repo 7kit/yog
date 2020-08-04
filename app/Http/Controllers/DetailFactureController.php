@@ -49,12 +49,13 @@ class DetailFactureController extends Controller
         $detailFacture->produit_id = $request->produit;
         $detailFacture->quantiteProduit = $request->quantiteProduit;
         $detailFacture->montantDetail = $produit->prixUnitaire*$request->quantiteProduit;
+        //$detailFacture->montantDetail = $produit->prixUnitaire*$request->quantiteProduit(100-$produit->remise)/100;
 
         $detailFacture->save();
         $montant = DetailFacture::where('facture_id', $request->facture_id)->sum('montantDetail');
         $facture = Facture::find($request->facture_id);
 
-        $facture->montantFacture = $montant;
+        $facture->montantFacture = (100*$montant-($montant*$facture->remise))/100;
 
         $facture->save();
         return redirect()->route('details', ['id' => $request->facture_id]);
@@ -102,7 +103,7 @@ class DetailFactureController extends Controller
 
         $montant = DetailFacture::where('facture_id', $request->facture_id)->sum('montantDetail');
         $facture = Facture::find($request->facture_id);
-        $facture->montantFacture = $montant;
+        $facture->montantFacture = $montant(100-$facture->remise)/100;
         $facture->save();
 
         return redirect()->route('details', ['id' => $request->facture_id]);

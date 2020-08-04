@@ -22,17 +22,20 @@
               		                  </tr>
                                     @foreach($encaissements as $encaissement)
                                         <tr>
-                                      <td>{{$encaissement->dateEncaissement}}</td>
+                                      <td>{{date('Y-m-d', strtotime($encaissement->dateEncaissement))}}</td>
                                       <td>{{$encaissement->montantEncaisse}}</td>
                                       <td>{{$encaissement->client->libelleClient}}</td>
                                       <td>
                                         <div class="btn-group">
-                                          <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                                           <a class="btn btn-success" href="#myModal{{$encaissement->id}}" data-toggle="modal"><i class="icon_check_alt2"></i></a>
-                                          <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                                          <form style="display:inline;" action="{{route('encaissements.delete', $encaissement->id)}}" method="post">
+                                            {{ method_field('DELETE') }}
+                                                              @csrf
+                                            <button class="btn btn-danger" type="submit"><i class="icon_close_alt2"></i></button>
+                                          </form>
                                         </div>
                                       </td>
-                                    </tr>   
+                                    </tr>
 
                                     <!-- modal de modification debut -->
                                                       <!-- Modal -->
@@ -50,7 +53,7 @@
                                          <div class="form-group ">
 	              	                      <label class="control-label col-lg-2" for="designationProduit">Date : <span class="required">*</span></label>
 	              	                      <div class="col-lg-10">
-	              	                        <input class="form-control" name="dateEncaissement" id="dp1" type="date" size="16" value="{{$encaissement->dateEncaissement}}">
+	              	                        <input class="form-control" name="dateEncaissement" id="dp1" type="date" size="16" value="{{date('Y-m-d', strtotime($encaissement->dateEncaissement))}}">
 	              	                      </div>
 	              	                    </div>
 	              	                    <div class="form-group ">
@@ -63,8 +66,8 @@
 	              	                        	@else
 	              	                        	<option value="{{$client->id}}">{{$client->libelleClient}}</option>
 	              	                        	@endif
-                                              @endforeach 
-                                              
+                                              @endforeach
+
                                           </select>
 	              	                      </div>
 	              	                    </div>
@@ -84,14 +87,14 @@
                                                         </div>
                                                       </div>
                                                       <!-- modal -->
-                                    <!-- modal de modification fin -->   
+                                    <!-- modal de modification fin -->
                                     @endforeach
-              		                  
+
               		                </tbody>
               		            </table>
               	</div>
-                
-                
+
+
                 <!-- Modal -->
                 <div tabindex="-1" class="modal fade" id="myModal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
                   <div class="modal-dialog">

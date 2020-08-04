@@ -21,7 +21,7 @@
         <!-- Custom styles -->
         <link href="{{ asset('niceadmin/css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('niceadmin/css/style-responsive.css') }}" rel="stylesheet" />
-        
+
     </head>
     <body>
         <!-- container section start -->
@@ -82,6 +82,17 @@
                                 <span>Encaissements</span>
                             </a>
                 </li>
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i class="icon_document_alt"></i>
+                          <span>Sorties</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+                      <ul class="sub">
+                          <li><a class="" href="{{ route('types')}}">Types</a></li>
+                          <li><a class="" href="{{ route('depenses', ['id'=>7777])}}">Depenses</a></li>
+                      </ul>
+                  </li>
                 <li class="sub-menu">
                   <a href="javascript:;" class="">
                                 <i class="icon_document_alt"></i>
@@ -91,6 +102,7 @@
                             <ul class="sub">
                               <li><a class="" href="{{ route('filtresFacture', ['debut' => '2000-01-01', 'fin'=> '2030-10-10', 'idclient'=> 0]) }}">Filtres Factures</a></li>
                               <li><a class="" href="{{ route('filtresEncaissement', ['debut' => '2000-01-01', 'fin'=> '2030-10-10', 'idclient'=> 0]) }}">Filtres Encaissements</a></li>
+                              <li><a href="{{ route('algroup') }}">Gestions des ALs</a></li>
                             </ul>
                 </li>
 

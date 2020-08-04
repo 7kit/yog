@@ -8,8 +8,15 @@ use App\Encaissement;
 use App\Facture;
 use App\Produit;
 
+//ajoute aussu
+use Carbon\Carbon;
+
 class FiltresController extends Controller
 {
+
+    public function algroup(){
+        return view('algroup');
+    }
 
 	public function show()
 	{
@@ -18,20 +25,23 @@ class FiltresController extends Controller
 		$montantEncaisse = Encaissement::all()->sum('montantEncaisse');
 		$montantFacture = Facture::all()->sum('montantFacture');
 		$resteAPayer = Facture::all()->sum('montantFacture') - Encaissement::all()->sum('montantEncaisse');
-		return view('dashboard', ['produits'=>$produits,'clients'=> $clients, 'montantEncaisse'=>$montantEncaisse, 'montantFacture'=>$montantFacture, 'resteAPayer'=>$resteAPayer]);
+		//ajoute du code par ici
+		$montantToday = Facture::whereDay('dateFacture', '=', Carbon::now()->day)->sum('montantFacture');
+		$montantThisMonth = Facture::whereMonth('dateFacture', '=', Carbon::now()->month)->sum('montantFacture');
+		return view('dashboard', ['produits'=>$produits,'clients'=> $clients, 'montantEncaisse'=>$montantEncaisse, 'montantFacture'=>$montantFacture, 'resteAPayer'=>$resteAPayer, 'montantToday'=> $montantToday, 'montantThisMonth'=> $montantThisMonth]);
 	}
 
 	public function showFacture($debut, $fin, $idclient)
 	{
 		$clients = Client::all();
 		if ($idclient==0) {
-        		$factures = Facture::where('dateFacture','>=', $debut)->where('dateFacture','<=',$fin)->get();
+        		$factures = Facture::where('dateFacture','>=', $debut)->where('dateFacture','<=',$fin)->orderBy('dateFacture', 'DESC')->get();
         		$montantFacture = Facture::where('dateFacture','>=', $debut)->where('dateFacture','<=',$fin)->sum('montantFacture');
         		$total = Facture::where('dateFacture','>=', $debut)->where('dateFacture','<=',$fin)->count();
-        	
+
         }
         else{
-        	$factures = Facture::where('dateFacture','>=', $debut)->where('dateFacture','<=',$fin)->where('cient_id',$idclient)->get();
+        	$factures = Facture::where('dateFacture','>=', $debut)->where('dateFacture','<=',$fin)->where('cient_id',$idclient)->orderBy('dateFacture', 'DESC')->get();
         		$montantFacture = Facture::where('dateFacture','>=', $debut)->where('dateFacture','<=',$fin)->where('cient_id',$idclient)->sum('montantFacture');
         		$total = Facture::where('dateFacture','>=', $debut)->where('dateFacture','<=',$fin)->where('cient_id',$idclient)->count();
         }
@@ -42,13 +52,13 @@ class FiltresController extends Controller
 	{
 		$clients = Client::all();
 		if ($idclient==0) {
-        		$encaissements = Encaissement::where('dateEncaissement','>=', $debut)->where('dateEncaissement','<=',$fin)->get();
+        		$encaissements = Encaissement::where('dateEncaissement','>=', $debut)->where('dateEncaissement','<=',$fin)->orderBy('dateEncaissement', 'DESC')->get();
         		$montantEncaisse = Encaissement::where('dateEncaissement','>=', $debut)->where('dateEncaissement','<=',$fin)->sum('montantEncaisse');
         		$total = Encaissement::where('dateEncaissement','>=', $debut)->where('dateEncaissement','<=',$fin)->count();
-        	
+
         }
         else{
-        	$encaissements = Encaissement::where('dateEncaissement','>=', $debut)->where('dateEncaissement','<=',$fin)->where('cient_id',$idclient)->get();
+        	$encaissements = Encaissement::where('dateEncaissement','>=', $debut)->where('dateEncaissement','<=',$fin)->where('cient_id',$idclient)->orderBy('dateEncaissement', 'DESC')->get();
         		$montantEncaisse = Encaissement::where('dateEncaissement','>=', $debut)->where('dateEncaissement','<=',$fin)->where('cient_id',$idclient)->sum('montantEncaisse');
         		$total = Encaissement::where('dateEncaissement','>=', $debut)->where('dateEncaissement','<=',$fin)->where('cient_id',$idclient)->count();
         }
@@ -57,7 +67,7 @@ class FiltresController extends Controller
 
 	public function processFacture(Request $request){
 		return redirect()->route('filtresFacture', ['debut' => $request->debut,'fin' => $request->fin,'idclient'=>$request->client]);
-		
+
 	}
 
 	public function processEncaissement(Request $request){
@@ -75,9 +85,9 @@ class FiltresController extends Controller
 				else{
 					array_push($eux, $client);
 				}
-				
+
 			}
-		    
+
 		}
 	}*/
 
@@ -90,12 +100,12 @@ class FiltresController extends Controller
         	if ($request->type=="Encaissements") {
         		$encaissements = Encaissement::where('dateEncaissement','>=', $request->debut)->where('dateEncaissement','<=',$request->fin);
         		$montantEncaisse = Encaissement::where('dateEncaissement','>=', $request->debut)->where('dateEncaissement','<=',$request->fin)->sum('montantEncaisse');
-        		return redirect()->route('filtres', ['t'=>'1','clients'=> $clients, 'encaissements'=> $encaissements, 'montantEncaisse'=>$montantEncaisse]); 
+        		return redirect()->route('filtres', ['t'=>'1','clients'=> $clients, 'encaissements'=> $encaissements, 'montantEncaisse'=>$montantEncaisse]);
         	}
         	if ($request->type=="Factures") {
         		$factures = Facture::where('dateFacture','>=', $request->debut)->where('dateFacture','<=',$request->fin);
         		$montantFacture = Facture::where('dateFacture','>=', $request->debut)->where('dateFacture','<=',$request->fin)->sum('montantFacture');
-        		return redirect()->route('filtres', ['t'=>'2','clients'=> $clients, 'factures'=> $factures, 'montantFacture'=>$montantFacture]); 
+        		return redirect()->route('filtres', ['t'=>'2','clients'=> $clients, 'factures'=> $factures, 'montantFacture'=>$montantFacture]);
         	}
         }
         else{
@@ -104,7 +114,7 @@ class FiltresController extends Controller
         	if ($request->type=="Encaissements") {
         		$encaissements = Encaissement::where('dateEncaissement','>=', $request->debut)->where('dateEncaissement','<=',$request->fin)->where('cient_id',$request->client);
         		$montantEncaisse = Encaissement::where('dateEncaissement','>=', $request->debut)->where('dateEncaissement','<=',$request->fin)->where('cient_id',$request->client)->sum('montantEncaisse');
-        		return redirect()->route('filtres', ['t'=>'3','clients'=> $clients, 'encaissements'=> $encaissements, 'montantEncaisse'=>$montantEncaisse, 'resteAPayer'=>$resteAPayer]); 
+        		return redirect()->route('filtres', ['t'=>'3','clients'=> $clients, 'encaissements'=> $encaissements, 'montantEncaisse'=>$montantEncaisse, 'resteAPayer'=>$resteAPayer]);
         	}
         	if ($request->type=="Factures") {
         		$factures = Facture::where('dateFacture','>=', $request->debut)->where('dateFacture','<=',$request->fin)->where('cient_id',$request->client);

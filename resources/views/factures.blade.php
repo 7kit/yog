@@ -17,24 +17,30 @@
               		                  <tr>
               		                    <th><i class="icon_profile"></i> Date</th>
                                       <th><i class="icon_cogs"></i> Numéros</th>
-              		                    <th><i class="icon_cogs"></i> Client</th>
+                                      <th><i class="icon_cogs"></i> Remise</th>
                                       <th><i class="icon_mobile"></i> Montant</th>
-              		                    <th><i class="icon_cogs"></i> Actions</th>
+                                      <th><i class="icon_cogs"></i> Client</th>
+                                      <th><i class="icon_cogs"></i> Actions</th>
               		                  </tr>
                                     @foreach($factures as $facture)
                                         <tr>
-                                      <td>{{$facture->dateFacture}}</td>
+                                      <td>{{date('d-m-Y', strtotime($facture->dateFacture))}}</td>
                                       <td><a href="{{route('details', $facture->id)}}">{{$facture->nFacture}}</a></td>
-                                      <td>{{$facture->client->libelleClient}}</td>
+                                      <td>{{$facture->remise}}</td>
                                       <td>{{$facture->montantFacture}}</td>
+                                      <td>{{$facture->client->libelleClient}}</td>
                                       <td>
                                         <div class="btn-group">
-                                          <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                                           <a class="btn btn-success" href="#myModal{{$facture->id}}" data-toggle="modal"><i class="icon_check_alt2"></i></a>
-                                          <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                                          <form style="display:inline;" action="{{route('factures.delete', $facture->id)}}" method="post">
+                                            {{ method_field('DELETE') }}
+                                                              @csrf
+                                            <button class="btn btn-danger" type="submit"><i class="icon_close_alt2"></i></button>
+                                          </form>
+
                                         </div>
                                       </td>
-                                    </tr>   
+                                    </tr>
 
                                     <!-- modal de modification debut -->
                                                       <!-- Modal -->
@@ -52,7 +58,7 @@
                                          <div class="form-group ">
 	              	                      <label class="control-label col-lg-2" for="dateFacture">Date : <span class="required">*</span></label>
 	              	                      <div class="col-lg-10">
-	              	                        <input class="form-control" name="dateFacture" id="dateFacture" type="date" size="16" value="{{$facture->dateFacture}}">
+	              	                        <input class="form-control" name="dateFacture" id="dateFacture" type="date" size="16" value="{{date('Y-m-d', strtotime($facture->dateFacture))}}">
 	              	                      </div>
 	              	                    </div>
                                       <div class="form-group ">
@@ -71,18 +77,23 @@
 	              	                        	@else
 	              	                        	<option value="{{$client->id}}">{{$client->libelleClient}}</option>
 	              	                        	@endif
-                                              @endforeach 
-                                              
+                                              @endforeach
+
                                           </select>
 	              	                      </div>
 	              	                    </div>
 	              	                    <div class="form-group ">
-	              	                      <label class="control-label col-lg-2" for="montant">Montant : <span class="required">*</span></label>
+	              	                      <label class="control-label col-lg-2" for="remise">Remise : <span class="required">*</span></label>
 	              	                      <div class="col-lg-10">
-	              	                        <input name="montantFacture" class="form-control " id="montant" required="" type="number" placeholder="Montant A Encaisser" value="{{$facture->montantFacture}}" / >
+	              	                        <input name="remise" class="form-control " id="remise" required="" type="number" placeholder="Montant A Encaisser" value="{{$facture->remise}}" / >
 	              	                      </div>
 	              	                    </div>
-                                                                </div>
+                                         <div class="form-group ">
+                                            <div class="col-lg-10">
+                                              <input name="facture_id" class="form-control " id="facture_id" required="" type="hidden" placeholder="Montant A Encaisser" value="{{$facture->id}}" / >
+                                            </div>
+                                           </div>
+                                          </div>
                                                                 <div class="modal-footer">
                                                                   <button class="btn btn-default" type="button" data-dismiss="modal">Fermer</button>
                                                                   <button class="btn btn-success" type="submit">Enregistrer</button>
@@ -92,14 +103,14 @@
                                                         </div>
                                                       </div>
                                                       <!-- modal -->
-                                    <!-- modal de modification fin -->   
+                                    <!-- modal de modification fin -->
                                     @endforeach
-              		                  
+
               		                </tbody>
               		            </table>
               	</div>
-                
-                
+
+
                 <!-- Modal -->
                 <div tabindex="-1" class="modal fade" id="myModal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
                   <div class="modal-dialog">
@@ -133,6 +144,12 @@
                                           </select>
 	              	                      </div>
 	              	                    </div>
+                                          <div class="form-group ">
+                                              <label class="control-label col-lg-2" for="remise">Numéro : <span class="required">*</span></label>
+                                              <div class="col-lg-10">
+                                                  <input name="remise" class="form-control " id="remise" required="" type="number" placeholder="Remise" / >
+                                              </div>
+                                          </div>
 		                   		</div>
 		                      <div class="modal-footer">
 		                        <button class="btn btn-default" type="button" data-dismiss="modal">Fermer</button>
