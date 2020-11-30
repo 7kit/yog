@@ -16,6 +16,7 @@
                                   <tbody>
                                     <tr>
                                       <th><i class="icon_profile"></i> Date</th>
+                                      <th><i class="icon_mobile"></i> Type</th>
                                       <th><i class="icon_mobile"></i> Libelle</th>
                                       <th><i class="icon_mobile"></i> Montant</th>
                                       <th><i class="icon_cogs"></i> Actions</th>
@@ -24,6 +25,7 @@
                                         <tr>
                                       <td>{{date('Y-m-d', strtotime($depense->dateDepense))}}</td>
                                       <td>{{$depense->type->libelleType}}</td>
+                                      <td>{{$depense->libelleDepense}}</td>
                                       <td>{{$depense->montantDepense}}</td>
                                       <td>
                                         <div class="btn-group">
