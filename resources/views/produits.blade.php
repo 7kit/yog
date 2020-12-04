@@ -15,12 +15,14 @@
               					<table class="table table-striped table-advance table-hover">
               		                <tbody>
               		                  <tr>
+              		                    <th><i class="icon_profile"></i>Type</th>
               		                    <th><i class="icon_profile"></i> Designation</th>
               		                    <th><i class="icon_mobile"></i> Prix</th>
               		                    <th><i class="icon_cogs"></i> Actions</th>
               		                  </tr>
                                     @foreach($produits as $produit)
                                         <tr>
+                                      <td>{{$produit->typeProduit->libelleTypeProduit}}</td>
                                       <td>{{$produit->designation}}</td>
                                       <td>{{$produit->prixUnitaire}}</td>
                                       <td>
@@ -48,6 +50,21 @@
                                                                   <h4 class="modal-title">Modification du produit</h4>
                                                                 </div>
                                                                 <div class="modal-body">
+                                                                <div class="form-group ">
+                                                                  <label class="control-label col-lg-2" for="type_id">Type : <span class="required">*</span></label>
+                                                                  <div class="col-lg-10">
+                                                                    <select name="type_id" id="type_id" class="form-control input-lg m-bot15">
+                                                                      @foreach($typeProduits as $type)
+                                                                      @if ($produit->type_id == $type->id)
+                                                                      <option value="{{$type->id}}" selected="true">{{$type->libelleTypeProduit}}</option>
+                                                                      @else
+                                                                      <option value="{{$type->id}}">{{$type->libelleTypeProduit}}</option>
+                                                                      @endif
+                                                                        @endforeach
+
+                                                                    </select>
+                                                                  </div>
+                                                                </div>
                                                                   <div class="form-group ">
                                                                               <label class="control-label col-lg-2" for="designationProduit">Désignation : <span class="required">*</span></label>
                                                                               <div class="col-lg-10">

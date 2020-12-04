@@ -16,7 +16,7 @@ class TypeProduitController extends Controller
     {
         //
         $typeProduits = TypeProduit::all();
-        return view('produits', ['typeProduits' => $typeProduits]);
+        return view('typeproduits', ['typeProduits' => $typeProduits]);
     }
 
     /**
@@ -38,6 +38,13 @@ class TypeProduitController extends Controller
     public function store(Request $request)
     {
         //
+        $type = new TypeProduit;
+
+        $type->libelleTypeProduit = $request->libelleTypeProduit;
+
+        $type->save();
+
+        return redirect()->route('typeproduits');
     }
 
     /**
@@ -72,6 +79,10 @@ class TypeProduitController extends Controller
     public function update(Request $request, TypeProduit $typeProduit)
     {
         //
+        TypeProduit::where('id', $request->id)->update([
+            'libelleTypeProduit' => $request['libelleTypeProduit'],
+        ]);
+        return redirect()->route('typeproduits');
     }
 
     /**
@@ -83,5 +94,8 @@ class TypeProduitController extends Controller
     public function destroy(TypeProduit $typeProduit)
     {
         //
+        $type = TypeProduit::findOrfail($request->id);
+        $type->delete();
+        return redirect()->route('typeproduits');
     }
 }
