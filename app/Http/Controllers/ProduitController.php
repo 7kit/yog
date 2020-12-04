@@ -41,6 +41,7 @@ class ProduitController extends Controller
 
         $produit->designation = $request->designationProduit;
         $produit->prixUnitaire = $request->prix;
+        $produit->type_id = $request->type_id;
 
         $produit->save();
 
@@ -84,6 +85,7 @@ class ProduitController extends Controller
          Produit::where('id', $request->id)->update([
                  'designation' => $request['designationProduit'],
                  'prixUnitaire' => $request['prix'],
+                 'type_id' => $request['type_id'],
              ]);
          return redirect()->route('produits');
 

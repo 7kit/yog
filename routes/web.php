@@ -67,3 +67,9 @@ Route::get('/depenses/{id}', 'DepenseController@index')->name('depenses');
 Route::post('/depenses.store', 'DepenseController@store')->name('depenses.store');
 Route::patch('/depenses.update', 'DepenseController@update')->name('depenses.update');
 Route::delete('/depenses/{id}/delete', 'DepenseController@destroy')->name('depenses.delete');
+
+// Ajout comptant pour la deuxieme version !
+Route::get('/typeproduits', 'TypeProduitController@index')->name('typeproduits');
+Route::post('/typeproduits.store', 'TypeProduitController@store')->name('typeproduits.store');
+Route::patch('/typeproduits.update', 'TypeProduitController@update')->name('typeproduits.update');
+Route::delete('/typeproduits/{id}/delete', 'TypeProduitController@destroy')->name('typeproduits.delete');
