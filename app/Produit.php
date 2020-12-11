@@ -17,4 +17,9 @@ class Produit extends Model
     {
         return $this->belongsTo('App\TypeProduit', 'type_id');
     }
+
+    public function productions()
+    {
+        return $this->hasMany('App\Production');
+    }
 }

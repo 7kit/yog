@@ -73,3 +73,10 @@ Route::get('/typeproduits', 'TypeProduitController@index')->name('typeproduits')
 Route::post('/typeproduits.store', 'TypeProduitController@store')->name('typeproduits.store');
 Route::patch('/typeproduits.update', 'TypeProduitController@update')->name('typeproduits.update');
 Route::delete('/typeproduits/{id}/delete', 'TypeProduitController@destroy')->name('typeproduits.delete');
+
+Route::get('/productions', 'ProductionsController@index')->name('productions');
+Route::post('/productions.store', 'ProductionsController@store')->name('productions.store');
+Route::patch('/productions.update', 'ProductionsController@update')->name('productions.update');
+Route::delete('/productions/{id}/delete', 'ProductionsController@destroy')->name('productions.delete');
+
+Route::delete('/perimes', 'ProductionsController@destroy')->name('perimes');

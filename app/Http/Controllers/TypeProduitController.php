@@ -87,11 +87,11 @@ class TypeProduitController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\TypeProduit  $typeProduit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeProduit $typeProduit)
+    public function destroy(Request $request, TypeProduit $typeProduit)
     {
         //
         $type = TypeProduit::findOrfail($request->id);

@@ -57,11 +57,20 @@
                                 <span>Dashboard</span>
                             </a>
                 </li>
-                <li class="">
-                  <a class="" href="{{ route('produits') }}">
+                <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i class="icon_house_alt"></i>
+                          <span>Produits -></span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+                      <ul class="sub">
+                          <li><a class="" href="{{ route('produits')}}">Opérations</a></li>
+                          <li><a class="" href="{{ route('typeproduits')}}">Types</a></li>
+                      </ul>
+                            <!-- <a class="" href="{{ route('produits') }}">
                                 <i class="icon_house_alt"></i>
                                 <span>Produits</span>
-                            </a>
+                            </a> -->
                 </li>
                 <li class="sub-menu">
                   <a href="{{ route('factures') }}" class="">
@@ -103,6 +112,18 @@
                               <li><a class="" href="{{ route('filtresFacture', ['debut' => '2000-01-01', 'fin'=> '2030-10-10', 'idclient'=> 0]) }}">Filtres Factures</a></li>
                               <li><a class="" href="{{ route('filtresEncaissement', ['debut' => '2000-01-01', 'fin'=> '2030-10-10', 'idclient'=> 0]) }}">Filtres Encaissements</a></li>
                               <li><a href="{{ route('algroup') }}">Gestions des ALs</a></li>
+                            </ul>
+                </li>
+                <li class="sub-menu">
+                  <a href="javascript:;" class="">
+                                <i class="icon_document_alt"></i>
+                                <span>Gestion de stocks</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                              <li><a class="" href="{{ route('productions') }}">Productions</a></li>
+                              <li><a class="" href="{{ route('perimes') }}">Périmés</a></li>
+                              <li><a href="{{ route('algroup') }}">Rapport</a></li>
                             </ul>
                 </li>
 

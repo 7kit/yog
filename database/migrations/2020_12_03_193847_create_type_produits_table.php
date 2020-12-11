@@ -13,7 +13,7 @@ class CreateTypeproduitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('typeproduits', function (Blueprint $table) {
+        Schema::create('type_produits', function (Blueprint $table) {
             $table->id();
             $table->string('libelleTypeProduit');
             $table->timestamps();

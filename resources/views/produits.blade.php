@@ -22,7 +22,11 @@
               		                  </tr>
                                     @foreach($produits as $produit)
                                         <tr>
+                                        @if(isset($produit->typeProduit))
                                       <td>{{$produit->typeProduit->libelleTypeProduit}}</td>
+                                      @else
+                                      <td>NON DEFINI</td>
+                                      @endif
                                       <td>{{$produit->designation}}</td>
                                       <td>{{$produit->prixUnitaire}}</td>
                                       <td>
