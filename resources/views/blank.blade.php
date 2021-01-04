@@ -124,6 +124,7 @@
                               <li><a class="" href="{{ route('productions') }}">Productions</a></li>
                               <li><a class="" href="{{ route('perimes') }}">Périmés</a></li>
                               <li><a href="{{ route('algroup') }}">Rapport</a></li>
+                              <li><a href="{{ route('graphes') }}">Dashboard</a></li>
                             </ul>
                 </li>
 

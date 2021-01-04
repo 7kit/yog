@@ -79,4 +79,9 @@ Route::post('/productions.store', 'ProductionsController@store')->name('producti
 Route::patch('/productions.update', 'ProductionsController@update')->name('productions.update');
 Route::delete('/productions/{id}/delete', 'ProductionsController@destroy')->name('productions.delete');
 
-Route::delete('/perimes', 'ProductionsController@destroy')->name('perimes');
+Route::get('/perimes', 'PerimeController@index')->name('perimes');
+Route::post('/perimes.store', 'PerimeController@store')->name('perimes.store');
+Route::patch('/perimes.update', 'PerimeController@update')->name('perimes.update');
+Route::delete('/perimes/{id}/delete', 'PerimeController@destroy')->name('perimes.delete');
+
+Route::get('/graphes', 'PerimeController@graph')->name('graphes');
